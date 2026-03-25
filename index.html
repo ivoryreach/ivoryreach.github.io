@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ivory Reach — Creative Productions</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F5F0E8;
+    --ivory-warm: #EDE5D4;
+    --ivory-deep: #D4C9B0;
+    --dark: #0A0A0A;
+    --dark-mid: #111111;
+    --dark-card: #161616;
+    --dark-border: #222222;
+    --accent: #C9A96E;
+    --accent-light: #E8D5A8;
+    --text-muted: #888888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--ivory);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--ivory);
+    text-transform: uppercase;
+  }
+
+  .nav-logo span {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--ivory); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--dark-border), transparent);
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 10vw, 130px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    max-width: 480px;
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+    margin-bottom: 56px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    text-decoration: none;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+    transition: gap 0.3s ease;
+  }
+
+  .hero-cta:hover { gap: 24px; }
+
+  .hero-cta-line {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .hero-cta:hover .hero-cta-line { width: 60px; }
+
+  .hero-badge {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  .hero-badge-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* SECTION SHARED */
+  section {
+    padding: 100px 60px;
+    position: relative;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  /* SERVICES */
+  .services {
+    background: var(--dark-mid);
+    border-top: 1px solid var(--dark-border);
+    border-bottom: 1px solid var(--dark-border);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--dark-border);
+    margin-top: 60px;
+  }
+
+  .service-item {
+    background: var(--dark-mid);
+    padding: 48px 40px;
+    transition: background 0.3s ease;
+  }
+
+  .service-item:hover { background: var(--dark-card); }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--dark-border);
+    line-height: 1;
+    margin-bottom: 24px;
+    transition: color 0.3s ease;
+  }
+
+  .service-item:hover .service-number { color: var(--accent); opacity: 0.3; }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--ivory);
+  }
+
+  .service-desc {
+    font-size: 12px;
+    line-height: 2;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* WORK / PORTFOLIO PREVIEW */
+  .work-intro {
+    max-width: 600px;
+    margin-bottom: 60px;
+  }
+
+  .work-intro h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .work-intro h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .work-intro p {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text-muted);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2px;
+  }
+
+  .work-item {
+    background: var(--dark-card);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .work-item-tall {
+    grid-row: span 2;
+  }
+
+  .work-thumb {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: var(--dark-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .work-item-tall .work-thumb {
+    aspect-ratio: unset;
+    height: 100%;
+    min-height: 500px;
+  }
+
+  .work-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .work-placeholder-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--dark-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .work-placeholder-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .work-placeholder-text {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Gradient overlays on work items */
+  .work-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .work-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px;
+    z-index: 2;
+    transform: translateY(8px);
+    transition: transform 0.3s ease;
+  }
+
+  .work-item:hover .work-overlay { transform: translateY(0); }
+
+  .work-tag {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .work-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ivory);
+  }
+
+  /* GRADIENT BG for work items */
+  .work-item:nth-child(1) .work-thumb { background: linear-gradient(135deg, #1a1510 0%, #0d0d0d 100%); }
+  .work-item:nth-child(2) .work-thumb { background: linear-gradient(135deg, #101418 0%, #0d0d0d 100%); }
+  .work-item:nth-child(3) .work-thumb { background: linear-gradient(135deg, #141210 0%, #0d0d0d 100%); }
+
+  /* TEAM */
+  .team {
+    background: var(--dark-mid);
+    border-top: 1px solid var(--dark-border);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .team-card {
+    background: var(--dark-card);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .team-card:hover { background: #1a1a1a; }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+
+  .team-card:hover::before { height: 100%; }
+
+  .team-photo-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--dark-border);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .team-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 4px;
+    color: var(--ivory);
+  }
+
+  .team-role {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+
+  .team-bio {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+  }
+
+  .team-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .credential {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .credential::before {
+    content: '—';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .team-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.3s ease;
+  }
+
+  .team-linkedin:hover { gap: 14px; }
+
+  /* APPROACH */
+  .approach {
+    border-top: 1px solid var(--dark-border);
+  }
+
+  .approach-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .approach-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+
+  .approach-left h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .approach-left p {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+
+  .approach-values {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .approach-value {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .approach-value:first-child { border-top: 1px solid var(--dark-border); }
+
+  .approach-value-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--ivory-warm);
+  }
+
+  .approach-value-num {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+  }
+
+  /* PACKAGE */
+  .package {
+    background: var(--dark-mid);
+    border-top: 1px solid var(--dark-border);
+    border-bottom: 1px solid var(--dark-border);
+  }
+
+  .package-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    padding: 56px;
+    max-width: 800px;
+    margin: 60px auto 0;
+    position: relative;
+  }
+
+  .package-card::before {
+    content: 'SIGNATURE PACKAGE';
+    position: absolute;
+    top: -1px; left: 48px;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--dark);
+    background: var(--accent);
+    padding: 6px 16px;
+  }
+
+  .package-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+
+  .package-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+  }
+
+  .package-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .package-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ivory-warm);
+  }
+
+  .package-item-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .package-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    padding-top: 32px;
+    border-top: 1px solid var(--dark-border);
+    font-style: italic;
+  }
+
+  /* CONTACT */
+  .contact {
+    text-align: center;
+    padding: 120px 60px;
+  }
+
+  .contact h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .contact h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .contact p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 56px;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 40px;
+    border: 1px solid var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .contact-btn:hover {
+    background: var(--accent);
+    color: var(--dark);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--dark-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ivory);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 24px 30px; }
+    .nav-links { display: none; }
+    section { padding: 80px 30px; }
+    .hero { padding: 100px 30px 80px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-item-tall { grid-row: span 1; }
+    .work-item-tall .work-thumb { min-height: 300px; }
+    .team-grid { grid-template-columns: 1fr; }
+    .approach-grid { grid-template-columns: 1fr; gap: 40px; }
+    .package-items { grid-template-columns: 1fr; }
+    .hero-badge { display: none; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .package-card { padding: 40px 28px; }
+    .contact { padding: 80px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Ivory<span>Reach</span></div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Creative Productions — Coventry, UK</div>
+  <h1 class="hero-title">
+    Visual<br>
+    <em>Storytelling</em><br>
+    Crafted.
+  </h1>
+  <p class="hero-subtitle">
+    We create cinematic content that captures the essence of your brand — from short-form social content to long-form documentary work. Every frame considered. Every story told with intention.
+  </p>
+  <a href="#work" class="hero-cta">
+    <span class="hero-cta-line"></span>
+    View Our Work
+  </a>
+  <div class="hero-badge">
+    <div class="hero-badge-text">Est.<br>2026<br>Coventry</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Do</div>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-number">01</div>
+      <div class="service-title">Brand Films & Promos</div>
+      <p class="service-desc">Short and long-form promotional content designed to elevate your brand and drive real engagement. Delivered in formats optimised for every platform.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-number">02</div>
+      <div class="service-title">Social Content Packages</div>
+      <p class="service-desc">Structured content packages — one long-form brand video supported by three short-form social clips — built to give your business immediate online presence.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-number">03</div>
+      <div class="service-title">Documentary & Editorial</div>
+      <p class="service-desc">In-depth storytelling for businesses, communities and individuals who have a story worth telling. Cinematic, considered and built to last.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-number">04</div>
+      <div class="service-title">Photography</div>
+      <p class="service-desc">Product, interior, food and portrait photography that brings the details of your business to life — images that work hard across every touchpoint.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-number">05</div>
+      <div class="service-title">Wedding Films</div>
+      <p class="service-desc">Cinematic wedding videography that captures the emotion, the movement and the moments that matter most — crafted as a film you will return to for a lifetime.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-number">06</div>
+      <div class="service-title">Reels & Short Form</div>
+      <p class="service-desc">Platform-native short form content for Instagram, TikTok and YouTube Shorts. Fast, visually compelling and built to perform in the first three seconds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-intro">
+    <div class="section-label">Selected Work</div>
+    <h2>Stories we have <em>told</em> so far</h2>
+    <p>Our work spans architecture, travel, food and lifestyle — a growing body of visual work that demonstrates our eye for composition, light and cinematic movement.</p>
+  </div>
+
+  <div class="work-grid">
+    <div class="work-item work-item-tall">
+      <div class="work-thumb">
+        <div class="work-placeholder">
+          <div class="work-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.889L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+          </div>
+          <span class="work-placeholder-text">Upload your best video clip here</span>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-tag">Architecture / Travel</div>
+        <div class="work-title">Istanbul — The City Between Two Worlds</div>
+      </div>
+    </div>
+
+    <div class="work-item">
+      <div class="work-thumb">
+        <div class="work-placeholder">
+          <div class="work-placeholder-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <span class="work-placeholder-text">Upload your best photo here</span>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-tag">Food & People</div>
+        <div class="work-title">Eid — Moments of Celebration</div>
+      </div>
+    </div>
+
+    <div class="work-item">
+      <div class="work-thumb">
+        <div class="work-placeholder">
+          <div class="work-placeholder-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <span class="work-placeholder-text">Upload your best photo here</span>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-tag">Detail & Texture</div>
+        <div class="work-title">Food — Up Close</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="section-label">The Team</div>
+  <div class="team-grid">
+
+    <!-- YAQOUB -->
+    <div class="team-card">
+      <div class="team-photo-placeholder">Y</div>
+      <div class="team-name">Yaqoub Imran</div>
+      <div class="team-role">Co-Founder — Creative Direction & Commercial Growth</div>
+      <p class="team-bio">
+        A prize-winning dental clinician turned visual storyteller, Yaqoub brings the same precision and attention to detail from clinical practice into every frame he captures. With a background in national editorial work and years of social media strategy for prominent medical organisations, he understands how content connects with audiences — and how to make it convert.
+      </p>
+      <div class="team-credentials">
+        <div class="credential">Undergraduate Communicator of the Year — awarded during final year of dental school</div>
+        <div class="credential">3 academic prizes — University of Birmingham Dental School</div>
+        <div class="credential">Editor — British Dental Journal Student & European Dental Students Association</div>
+        <div class="credential">4 years social media management — CLEFT Students & British Association of Private Dentistry (Student Section)</div>
+        <div class="credential">BDS — University of Birmingham School of Dentistry</div>
+      </div>
+      <a href="https://www.linkedin.com/in/yaqoubimran/" target="_blank" class="team-linkedin">
+        View LinkedIn Profile →
+      </a>
+    </div>
+
+    <!-- ARMAN -->
+    <div class="team-card">
+      <div class="team-photo-placeholder">A</div>
+      <div class="team-name">Arman</div>
+      <div class="team-role">Co-Founder — Client Relations & Sales</div>
+      <p class="team-bio">
+        An award-winning sales professional with a proven track record in high-ticket luxury markets, Arman brings a commercial sharpness and client-first approach to everything Ivory Reach does. His ability to understand what a client truly needs — and deliver against it — translates directly into the way we approach every production brief.
+      </p>
+      <div class="team-credentials">
+        <div class="credential">Jaguar Land Rover Sales Executive of the Year — Finalist 2022</div>
+        <div class="credential">Over £500,000 in product sold — luxury automotive sector</div>
+        <div class="credential">Current Sales Executive — Audi Listers Coventry</div>
+        <div class="credential">FCA Accredited — Financial Conduct Authority regulated</div>
+        <div class="credential">2+ years high-ticket sales experience in luxury automotive</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach">
+  <div class="approach-grid">
+    <div class="approach-left">
+      <div class="section-label">How We Work</div>
+      <h2>Content that <em>earns</em> its place on screen</h2>
+      <p>We don't just show up and shoot. We take time to understand your business, your audience and what you actually need before a camera is switched on. The result is content that works harder and lasts longer.</p>
+      <p>Based in Coventry and available across the West Midlands, we are a small team that operates with the quality and intentionality of a much larger studio — without the overhead.</p>
+    </div>
+    <div class="approach-values">
+      <div class="approach-value">
+        <span class="approach-value-text">Discovery first</span>
+        <span class="approach-value-num">01</span>
+      </div>
+      <div class="approach-value">
+        <span class="approach-value-text">Cinematic quality</span>
+        <span class="approach-value-num">02</span>
+      </div>
+      <div class="approach-value">
+        <span class="approach-value-text">Platform-native delivery</span>
+        <span class="approach-value-num">03</span>
+      </div>
+      <div class="approach-value">
+        <span class="approach-value-text">Values-led production</span>
+        <span class="approach-value-num">04</span>
+      </div>
+      <div class="approach-value">
+        <span class="approach-value-text">Long-term relationships</span>
+        <span class="approach-value-num">05</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGE -->
+<section class="package">
+  <div class="section-label">Our Offering</div>
+  <div class="package-card">
+    <div class="package-title">The Starter Package</div>
+    <p class="package-subtitle">Designed for small businesses ready to establish a serious online presence</p>
+    <div class="package-items">
+      <div class="package-item">
+        <div class="package-item-dot"></div>
+        1 × Long-form brand video (2–4 mins)
+      </div>
+      <div class="package-item">
+        <div class="package-item-dot"></div>
+        3 × Short-form social clips (15–60 secs)
+      </div>
+      <div class="package-item">
+        <div class="package-item-dot"></div>
+        Fully edited and colour graded
+      </div>
+      <div class="package-item">
+        <div class="package-item-dot"></div>
+        Optimised for Instagram, TikTok & YouTube
+      </div>
+      <div class="package-item">
+        <div class="package-item-dot"></div>
+        Shot on Sony ZV-E10 II
+      </div>
+      <div class="package-item">
+        <div class="package-item-dot"></div>
+        Full commercial usage rights
+      </div>
+    </div>
+    <p class="package-note">
+      We are currently building our portfolio and working with select local businesses at introductory rates. If you are interested in working with us, get in touch and we will tailor a package around exactly what your business needs.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2>Let's make<br>something <em>worth watching</em></h2>
+  <p>Based in Coventry. Available across the West Midlands and beyond.</p>
+  <a href="/cdn-cgi/l/email-protection#f69e939a9a99b69f8099848f849397959ed89599d8839d" class="contact-btn">
+    Get In Touch
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Ivory<span>Reach</span></div>
+  <div class="footer-copy">© 2026 Ivory Reach. All rights reserved.</div>
+  <div class="footer-sub">A subsidiary of Mi
